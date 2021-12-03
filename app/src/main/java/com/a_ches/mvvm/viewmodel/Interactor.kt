@@ -1,4 +1,4 @@
-package com.a_ches.mvvm.presenter
+package com.a_ches.mvvm.viewmodel
 
 import io.reactivex.Observable
 
