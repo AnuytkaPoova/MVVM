@@ -2,46 +2,40 @@ package com.a_ches.mvvm.view.main
 
 import androidx.lifecycle.LiveData
 import com.a_ches.mvvm.model.data.AppState
-import com.a_ches.mvvm.model.datasource.DataSourceLocal
-import com.a_ches.mvvm.model.datasource.DataSourceRemote
-import com.a_ches.mvvm.model.repository.RepositoryImplementation
+
+import com.a_ches.mvvm.utils.parseSearchResults
 import com.a_ches.mvvm.viewmodel.BaseViewModel
-import io.reactivex.observers.DisposableObserver
 
-class MainViewModel(
-    private val interactor: MainInteractor = MainInteractor(
-        RepositoryImplementation(DataSourceRemote()),
-        RepositoryImplementation(DataSourceLocal())
-    )
-    ) : BaseViewModel<AppState>() {
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-        private var appState: AppState? = null
+class MainViewModel(private val interactor: MainInteractor) :
+    BaseViewModel<AppState>() {
 
-        override fun getData(word: String, isOnline: Boolean): LiveData<AppState> {
-            compositeDisposable.add(
-                interactor.getData(word, isOnline)
-                    .subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.ui())
-                    .doOnSubscribe { liveDataForViewToObserve.value = AppState.Loading(null) }
-                    .subscribeWith(getObserver())
-            )
-            return super.getData(word, isOnline)
-        }
+    private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
 
-        private fun getObserver(): DisposableObserver<AppState> {
-            return object : DisposableObserver<AppState>() {
+    fun subscribe(): LiveData<AppState> {
+        return liveDataForViewToObserve
+    }
 
-                override fun onNext(state: AppState) {
-                    appState = state
-                    liveDataForViewToObserve.value = state
-                }
+    override fun getData(word: String, isOnline: Boolean) {
+        _mutableLiveData.value = AppState.Loading(null)
+        cancelJob()
+        viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
+    }
 
-                override fun onError(e: Throwable) {
-                    liveDataForViewToObserve.value = AppState.Error(e)
-                }
+    //Doesn't have to use withContext for Retrofit call if you use .addCallAdapterFactory(CoroutineCallAdapterFactory()). The same goes for Room
+    private suspend fun startInteractor(word: String, isOnline: Boolean) = withContext(Dispatchers.IO) {
+        _mutableLiveData.postValue(parseSearchResults(interactor.getData(word, isOnline)))
+    }
 
-                override fun onComplete() {
-                }
-            }
-        }
+    override fun handleError(error: Throwable) {
+        _mutableLiveData.postValue(AppState.Error(error))
+    }
+
+    override fun onCleared() {
+        _mutableLiveData.value = AppState.Success(null)
+        super.onCleared()
+    }
     }
