@@ -1,13 +1,14 @@
 package com.a_ches.mvvm.view.main
 
-import com.a_ches.mvvm.model.data.AppState
-import com.a_ches.mvvm.model.data.DataModel
-import com.a_ches.mvvm.model.repository.Repository
-import com.a_ches.mvvm.model.repository.RepositoryLocal
-import com.a_ches.mvvm.viewmodel.Interactor
+import com.a_ches.core.viewmodel.Interactor
+import com.a_ches.model.data.AppState
+import com.a_ches.model.data.DataModel
+
+import com.a_ches.repository.Repository
+import com.a_ches.repository.RepositoryLocal
 
 
-class MainInteractor (
+class MainInteractor(
     private val repositoryRemote: Repository<List<DataModel>>,
     private val repositoryLocal: RepositoryLocal<List<DataModel>>
 ) : Interactor<AppState> {

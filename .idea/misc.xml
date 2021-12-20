@@ -23,6 +23,11 @@
         <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/app/src/main/res/layout/search_dialog_fragment.xml" value="0.20471014492753623" />
         <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/app/src/main/res/layout/sheet_dialog.xml" value="0.20471014492753623" />
         <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/app/src/main/res/menu/history_menu.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/historyScreen/src/main/res/layout/activity_history.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/historyScreen/src/main/res/layout/activity_history_recyclerview_item.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/historyScreen/src/main/res/layout/activity_main.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/historyScreen/src/main/res/layout/loading_layout.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/a_che/AndroidStudioProjects/MVVM/utils/src/main/res/layout/activity_main.xml" value="0.19293478260869565" />
       </map>
     </option>
   </component>

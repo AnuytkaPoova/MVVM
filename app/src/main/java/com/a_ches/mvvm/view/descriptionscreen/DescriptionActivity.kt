@@ -10,8 +10,9 @@ import coil.ImageLoader
 import coil.request.LoadRequest
 import com.a_ches.mvvm.R
 import com.a_ches.mvvm.databinding.ActivityDescriptionBinding
-import com.a_ches.mvvm.utils.network.isOnline
-import com.a_ches.mvvm.utils.ui.AlertDialogFragment
+import com.a_ches.utils.network.isOnline
+import com.a_ches.utils.ui.AlertDialogFragment
+
 
 class DescriptionActivity : AppCompatActivity() {
 
@@ -87,9 +88,6 @@ class DescriptionActivity : AppCompatActivity() {
                     imageView.setImageResource(R.drawable.ic_load_error_vector)
                 }
             )
-            //.transformations(
-            //    CircleCropTransformation(),
-            //)
             .build()
 
         ImageLoader(this).execute(request)

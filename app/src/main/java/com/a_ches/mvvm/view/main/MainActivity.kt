@@ -5,22 +5,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.a_ches.core.BaseActivity
+import com.a_ches.model.data.AppState
+import com.a_ches.model.data.DataModel
 import com.a_ches.mvvm.view.main.adapter.MainAdapter
 import com.a_ches.mvvm.R
 import com.a_ches.mvvm.databinding.ActivityMainBinding
-import com.a_ches.mvvm.model.data.AppState
-import com.a_ches.mvvm.model.data.DataModel
 import com.a_ches.mvvm.utils.convertMeaningsToString
-import com.a_ches.mvvm.utils.network.isOnline
-import com.a_ches.mvvm.view.base.BaseActivity
+
 import com.a_ches.mvvm.view.descriptionscreen.DescriptionActivity
 import com.a_ches.mvvm.view.history.HistoryActivity
+import com.a_ches.utils.network.isOnline
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -45,7 +41,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                         this@MainActivity,
                         data.text!!,
                         convertMeaningsToString(data.meanings!!),
-                        data.meanings[0].imageUrl
+                        data.meanings!![0].imageUrl
                     )
                 )
             }
@@ -96,7 +92,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
         val viewModel: MainViewModel by viewModel()
         model = viewModel
-        model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
+        model.subscribe().observe(this@MainActivity, { renderData(it) })
     }
 
     private fun initViews() {
