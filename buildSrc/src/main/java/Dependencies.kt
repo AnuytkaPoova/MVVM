@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Config {
-    const val application_id = "com.a_ches.mvvm"
+    const val application_id = "geekbrains.ru.translator"
     const val compile_sdk = 30
     const val min_sdk = 21
     const val target_sdk = 30

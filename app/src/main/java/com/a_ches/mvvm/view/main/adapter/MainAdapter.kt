@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.a_ches.model.data.DataModel
+import com.a_ches.model.data.userdata.DataModel
 import com.a_ches.mvvm.R
-import com.a_ches.mvvm.utils.convertMeaningsToString
-import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
+import com.a_ches.mvvm.utils.convertMeaningsToSingleString
+
 
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
@@ -42,7 +42,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.findViewById<TextView>(R.id.header_textview_recycler_item).text = data.text
                 itemView.findViewById<TextView>(R.id.description_textview_recycler_item).text =
-                    convertMeaningsToString(data.meanings!!)
+                    convertMeaningsToSingleString(data.meanings)
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }

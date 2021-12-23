@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import com.a_ches.core.viewmodel.BaseViewModel
 import com.a_ches.model.data.AppState
 import com.a_ches.mvvm.utils.parseOnlineSearchResults
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class MainViewModel(private val interactor: MainInteractor) :
     BaseViewModel<AppState>() {

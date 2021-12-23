@@ -1,11 +1,12 @@
 package com.a_ches.mvvm.view.history
 
+
 import android.os.Bundle
-import com.a_ches.core.BaseActivity
 import com.a_ches.historyscreen.databinding.ActivityHistoryBinding
 import com.a_ches.model.data.AppState
-import com.a_ches.model.data.DataModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.a_ches.model.data.userdata.DataModel
+import com.a_ches.core.BaseActivity
+import org.koin.android.scope.currentScope
 
 
 class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
@@ -36,7 +37,7 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
         if (binding.historyActivityRecyclerview.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
-        val viewModel: HistoryViewModel by viewModel()
+        val viewModel: HistoryViewModel by currentScope.inject()
         model = viewModel
         model.subscribe().observe(this@HistoryActivity, { renderData(it) })
     }

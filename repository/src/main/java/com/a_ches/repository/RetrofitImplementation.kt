@@ -1,6 +1,7 @@
 package com.a_ches.repository
 
-import com.a_ches.model.data.DataModel
+import com.a_ches.model.data.dto.SearchResultDto
+import com.a_ches.model.data.userdata.DataModel
 
 import com.a_ches.repository.api.ApiService
 import com.a_ches.repository.api.BaseInterceptor
@@ -12,9 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 
 
-class RetrofitImplementation : DataSource<List<DataModel>> {
+class RetrofitImplementation : DataSource<List<SearchResultDto>> {
 
-    override suspend fun getData(word: String): List<DataModel> {
+    override suspend fun getData(word: String): List<SearchResultDto> {
         return getService(BaseInterceptor.interceptor).searchAsync(word).await()
     }
 
