@@ -1,6 +1,7 @@
 package com.a_ches.repository.api
 
-import com.a_ches.model.data.DataModel
+import com.a_ches.model.data.dto.SearchResultDto
+import com.a_ches.model.data.userdata.DataModel
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,5 +9,5 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("words/search")
-    fun searchAsync(@Query("search") wordToSearch: String): Deferred<List<DataModel>>
+    fun searchAsync(@Query("search") wordToSearch: String): Deferred<List<SearchResultDto>>
 }

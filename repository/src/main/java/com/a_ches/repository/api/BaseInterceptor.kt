@@ -4,10 +4,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-/**
- * Custom interceptor to intercept basic responses and to show basic errors to the user
- * (not fully implemented)
- */
+
+
 class BaseInterceptor private constructor() : Interceptor {
 
     private var responseCode: Int = 0

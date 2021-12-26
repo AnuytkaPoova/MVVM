@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import android.widget.Toast
 import com.a_ches.core.databinding.LoadingLayoutBinding
 import com.a_ches.core.viewmodel.BaseViewModel
 import com.a_ches.core.viewmodel.Interactor
 import com.a_ches.model.data.AppState
-import com.a_ches.model.data.DataModel
-import com.a_ches.utils.network.isOnline
+import com.a_ches.model.data.userdata.DataModel
+import com.a_ches.utils.network.OnlineLiveData
 import com.a_ches.utils.ui.AlertDialogFragment
 
 
@@ -19,18 +20,32 @@ abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity
 
     private lateinit var binding: LoadingLayoutBinding
     abstract val model: BaseViewModel<T>
-    protected var isNetworkAvailable: Boolean = false
+    protected var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        isNetworkAvailable = isOnline(applicationContext)
+        subscribeToNetworkChange()
     }
+
+    private fun subscribeToNetworkChange() {
+        OnlineLiveData(this).observe(
+            this@BaseActivity,
+            {
+                isNetworkAvailable = it
+                if (!isNetworkAvailable) {
+                    Toast.makeText(
+                        this@BaseActivity,
+                        R.string.dialog_message_device_is_offline,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+    }
+
 
     override fun onResume() {
         super.onResume()
         binding = LoadingLayoutBinding.inflate(layoutInflater)
-
-        isNetworkAvailable = isOnline(applicationContext)
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionDialog()
         }
@@ -95,3 +110,4 @@ abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity
 
     abstract fun setDataToAdapter(data: List<DataModel>)
 }
+
